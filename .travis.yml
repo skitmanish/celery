@@ -10,7 +10,11 @@ services:
 before_install:
   - docker build -t manishn9887/celeryapp .
 
-script: pytest
+before_script:
+  - pip install docker-compose
+
+script:
+  - docker-compose run app sh -c "python manage.py test && flake8"
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u" "$DOCKER_ID" --password-stdin
