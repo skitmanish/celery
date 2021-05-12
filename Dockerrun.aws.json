@@ -1,24 +1,52 @@
+
 {
   "AWSEBDockerrunVersion": 2,
+  "volumes": [],
   "containerDefinitions": [
     {
+      "essential": true,
+      "image": "redis",
       "name": "redis",
-      "image": "redis:alpine",
-      "memory": 500,
-      "essential": true
+      "portMappings": [{
+        "containerPort": 6379
+      }],
+      "memory": 128
     },
     {
       "name": "celeryapp",
       "image": "manishn9887/celeryapp",
-      "memory": 128,
-      "cpu": 10,
-      "essential": false,
-      "portMapping": [
+      "environment": [],
+      "essential": true,
+      "memory": 256,
+      "links": ["redis"],
+      "mountPoints": [
         {
-          "containerPort": 8000,
+          "sourceVolume": "awseb-logs-app",
+          "containerPath": "/core/log"
+        }
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000,
           "hostPort": 80
         }
       ]
+    },
+    {
+      "name": "worker",
+      "image": "manishn9887/celeryapp",
+      "command": ["celery", "worker", "-A", "core", "-l","info"],
+      "environment": [],
+      "essential": true,
+      "memory": 256,
+      "links": ["redis"],
+      "mountPoints": [
+        {
+          "sourceVolume": "awseb-logs-worker",
+          "containerPath": "/core/log"
+        }
+      ],
+      "portMappings": []
     }
   ]
 }
