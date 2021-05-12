@@ -136,13 +136,13 @@ DEFAULT_FROM_EMAIL = 'veryacademydemo@gmail.com'
 
 ASGI_APPLICATION = "core.asgi.application"
 
-# REDIS_HOST = 'localhost'
-# REDIS_PORT = '6379'
-# CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 
-# CELERY_BROKER_URL = 'redis://redis:6379'
-# CELERY_RESULT_BACKEND = 'redis://redis:6379'
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
-CELERY_RESULT_BACKEND = "rpc"
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_RESULT_BACKEND = "rpc"
