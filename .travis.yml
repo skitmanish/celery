@@ -27,7 +27,6 @@ script:
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push manishn9887/celeryapp
-  - docker-compose up -d
 
 deploy:
   provider: elasticbeanstalk
@@ -38,6 +37,5 @@ deploy:
   bucket_path: celeryapp
   on:
     branch: master
-
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
