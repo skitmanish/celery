@@ -2,11 +2,17 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
+      "name": "redis",
+      "image": "redis:alpine",
+      "memory": 500,
+      "essential": true
+    },
+    {
       "name": "celeryapp",
       "image": "manishn9887/celeryapp",
-      "memory": 500,
+      "memory": 128,
       "cpu": 10,
-      "essential": true,
+      "essential": false,
       "portMapping": [
         {
           "containerPort": 8000,
