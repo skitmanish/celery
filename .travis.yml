@@ -1,4 +1,10 @@
+addons:
+  apt:
+    packages:
+      - rabbitmq-server
+
 language: python
+
 python:
   - 3.9.1
 
@@ -14,8 +20,24 @@ before_script:
   - pip install docker-compose
 
 script:
-  - docker-compose run app sh -c "python manage.py test && flake8"
+  - celery multi start worker1 -A core --pool=solo
+  - python manage.py test
+  - celery multi stopwait worker1
 
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u" "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push manishn9887/celeryapp
+  - docker-compose up -d
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: celeryapp
+  env: Celeryapp-env
+  bucket_name: elasticbeanstalk-us-east-2-758120010381
+  bucket_path: celeryapp
+  on:
+    branch: master
+
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

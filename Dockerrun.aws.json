@@ -1,0 +1,18 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "celeryapp",
+      "image": "manishn9887/celeryapp",
+      "memory": 500,
+      "cpu": 10,
+      "essential": true,
+      "portMapping": [
+        {
+          "containerPort": 8000,
+          "hostPort": 80
+        }
+      ]
+    }
+  ]
+}
