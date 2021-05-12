@@ -10,6 +10,8 @@ services:
 before_install:
   - docker build -t manishn9887/celeryapp .
 
+script: pytest
+
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u" "$DOCKER_ID" --password-stdin
   - docker push manishn9887/celeryapp
