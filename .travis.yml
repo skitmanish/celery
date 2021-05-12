@@ -17,7 +17,6 @@ before_script:
   - pip install docker-compose
 
 script:
-  - celery worker -A core -l info -c 4
   - python manage.py test
 
 after_success:
